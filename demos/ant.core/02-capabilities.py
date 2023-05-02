@@ -11,10 +11,11 @@ from ant.core import node
 from config import *
 
 # Initialize
-stick = driver.USB2Driver(SERIAL, log=LOG, debug=DEBUG)
+stick = driver.USB1Driver(SERIAL, log=LOG, debug=DEBUG)
+print(stick)
 antnode = node.Node(stick)
 antnode.start()
-
+print('start')
 # Interrogate stick
 # Note: This method will return immediately, as the stick's capabilities are
 # interrogated on node initialization (node.start()) in order to set proper
