@@ -23,7 +23,6 @@
 #
 ##############################################################################
 
-import thread
 
 # USB1 driver uses a USB<->Serial bridge
 import serial
@@ -37,7 +36,6 @@ from array import *
 
 
 class Driver(object):
-    _lock = thread.allocate_lock()
 
     def __init__(self, device, log=None, debug=False):
         self.device = device
