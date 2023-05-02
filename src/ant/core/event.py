@@ -70,7 +70,6 @@ def EventPump(evm):
             continue
         buffer_, messages = ProcessBuffer(buffer_)
 
-        evm.callbacks_lock.acquire()
         for message in messages:
             for callback in evm.callbacks:
                 try:
@@ -78,7 +77,6 @@ def EventPump(evm):
                 except Exception as e:
                     pass
 
-        evm.callbacks_lock.release()
 
         time.sleep(0.002)
 
@@ -131,16 +129,12 @@ class EventMachine(object):
         self.registerCallback(MsgCallback(self))
 
     def registerCallback(self, callback):
-        self.callbacks_lock.acquire()
         if callback not in self.callbacks:
             self.callbacks.append(callback)
-        self.callbacks_lock.release()
 
     def removeCallback(self, callback):
-        self.callbacks_lock.acquire()
         if callback in self.callbacks:
             self.callbacks.remove(callback)
-        self.callbacks_lock.release()
 
     def waitForAck(self, msg):
         while True:
