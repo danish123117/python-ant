@@ -24,7 +24,6 @@
 ##############################################################################
 
 import time
-import thread
 import uuid
 
 from ant.core.constants import *
@@ -44,7 +43,6 @@ class NetworkKey(object):
 
 
 class Channel(event.EventCallback):
-    cb_lock = thread.allocate_lock()
 
     def __init__(self, node):
         self.node = node
@@ -139,7 +137,6 @@ class Channel(event.EventCallback):
 
 
 class Node(event.EventCallback):
-    node_lock = thread.allocate_lock()
 
     def __init__(self, driver):
         self.driver = driver

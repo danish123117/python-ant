@@ -23,15 +23,10 @@
 #
 ##############################################################################
 
-#
-# Beware s/he who enters: uncommented, non unit-tested,
-# don't-fix-it-if-it-ain't-broken kind of threaded code ahead.
-#
 
 MAX_ACK_QUEUE = 25
 MAX_MSG_QUEUE = 25
 
-import thread
 import time
 
 from ant.core.constants import *
@@ -123,11 +118,7 @@ class MsgCallback(EventCallback):
 
 
 class EventMachine(object):
-    callbacks_lock = thread.allocate_lock()
-    running_lock = thread.allocate_lock()
-    pump_lock = thread.allocate_lock()
-    ack_lock = thread.allocate_lock()
-    msg_lock = thread.allocate_lock()
+   
 
     def __init__(self, driver):
         self.driver = driver
@@ -185,7 +176,6 @@ class EventMachine(object):
         if driver is not None:
             self.driver = driver
 
-        thread.start_new_thread(EventPump, (self,))
         while True:
             self.pump_lock.acquire()
             if self.pump:
