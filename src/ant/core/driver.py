@@ -176,7 +176,9 @@ class USB2Driver(Driver):
         dev1.set_configuration()
         cfg = dev1.get_active_configuration()
         interface_number = cfg[(0,0)].bInterfaceNumber
+        print(interface_number)
         alternate_setting = usb.control.get_interface(dev1, interface_number)
+        print(alternate_setting)
         intf = usb.util.find_descriptor(
             cfg, bInterfaceNumber = interface_number,
             AlternateSetting = alternate_setting
