@@ -123,7 +123,7 @@ class Driver(object):
         if len(data) == 0:
             return
 
-        print('========== [{0}] =========='.format(title)
+        print('========== [{0}] =========='.format(title))
 
         length = 8
         line = 0
