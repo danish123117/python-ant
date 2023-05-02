@@ -74,7 +74,7 @@ class Message(object):
                           MESSAGE_TX_SYNC,
                           len(self.getPayload()),
                           self.getType())
-        raw += self.getPayload()
+        raw += str(self.getPayload())
         raw += chr(self.getChecksum())
 
         return raw
