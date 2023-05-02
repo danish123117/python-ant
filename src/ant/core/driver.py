@@ -44,76 +44,62 @@ class Driver(object):
         self.is_open = False
 
     def isOpen(self):
-        self._lock.acquire()
         io = self.is_open
-        self._lock.release()
         return io
 
     def open(self):
-        self._lock.acquire()
 
-        try:
-            if self.is_open:
+        if self.is_open:
                 raise DriverError("Could not open device (already open).")
 
-            self._open()
-            self.is_open = True
-            if self.log:
-                self.log.logOpen()
-        finally:
-            self._lock.release()
+        self._open()
+        self.is_open = True
+        if self.log:
+            self.log.logOpen()
+    
+            
 
     def close(self):
-        self._lock.acquire()
+        if not self.is_open:
+            raise DriverError("Could not close device (not open).")
 
-        try:
-            if not self.is_open:
-                raise DriverError("Could not close device (not open).")
-
-            self._close()
-            self.is_open = False
-            if self.log:
-                self.log.logClose()
-        finally:
-            self._lock.release()
+        self._close()
+        self.is_open = False
+        if self.log:
+            self.log.logClose()
+            
 
     def read(self, count):
-        self._lock.acquire()
+        
 
-        try:
-            if not self.is_open:
-                raise DriverError("Could not read from device (not open).")
-            if count <= 0:
-                raise DriverError("Could not read from device (zero request).")
+        if not self.is_open:
+            raise DriverError("Could not read from device (not open).")
+        if count <= 0:
+            raise DriverError("Could not read from device (zero request).")
 
-            data = self._read(count)
-            if self.log:
-                self.log.logRead(data)
+        data = self._read(count)
+        if self.log:
+            self.log.logRead(data)
 
-            if self.debug:
-                self._dump(data, 'READ')
-        finally:
-            self._lock.release()
+        if self.debug:
+            self._dump(data, 'READ')
+       
+            
 
         return data
 
     def write(self, data):
-        self._lock.acquire()
+        if not self.is_open:
+            raise DriverError("Could not write to device (not open).")
+        if len(data) <= 0:
+            raise DriverError("Could not write to device (no data).")
 
-        try:
-            if not self.is_open:
-                raise DriverError("Could not write to device (not open).")
-            if len(data) <= 0:
-                raise DriverError("Could not write to device (no data).")
+        if self.debug:
+            self._dump(data, 'WRITE')
 
-            if self.debug:
-                self._dump(data, 'WRITE')
-
-            ret = self._write(data)
-            if self.log:
-                self.log.logWrite(data[0:ret])
-        finally:
-            self._lock.release()
+        ret = self._write(data)
+        if self.log:
+            self.log.logWrite(data[0:ret])
 
         return ret
 

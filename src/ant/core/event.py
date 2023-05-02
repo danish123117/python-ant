@@ -138,14 +138,12 @@ class EventMachine(object):
 
     def waitForAck(self, msg):
         while True:
-            self.ack_lock.acquire()
             for emsg in self.ack:
                 if msg.getType() != emsg.getMessageID():
                     continue
                 self.ack.remove(emsg)
                 self.ack_lock.release()
                 return emsg.getMessageCode()
-            self.ack_lock.release()
             time.sleep(0.002)
 
     def waitForMessage(self, class_):
