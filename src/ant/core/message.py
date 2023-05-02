@@ -70,12 +70,12 @@ class Message(object):
         return len(self.getPayload()) + 4
 
     def encode(self):
-        raw = struct.pack('BBB',
+        raw = str(struct.pack('BBB',
                           MESSAGE_TX_SYNC,
                           len(self.getPayload()),
-                          self.getType())
+                          self.getType()))
         raw += str(self.getPayload())
-        raw += chr(self.getChecksum())
+        raw += str(chr(self.getChecksum()))
 
         return raw
 
