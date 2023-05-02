@@ -159,38 +159,38 @@ class EventMachine(object):
             time.sleep(0.002)
 
     def start(self, driver=None):
-        self.running_lock.acquire()
+        
 
         if self.running:
-            self.running_lock.release()
+            
             return
         self.running = True
         if driver is not None:
             self.driver = driver
 
         while True:
-            self.pump_lock.acquire()
+            
             if self.pump:
-                self.pump_lock.release()
+                
                 break
-            self.pump_lock.release()
+            
             time.sleep(0.001)
 
-        self.running_lock.release()
+        
 
     def stop(self):
-        self.running_lock.acquire()
+        
 
         if not self.running:
-            self.running_lock.release()
+            
             return
         self.running = False
-        self.running_lock.release()
+        
 
         while True:
-            self.pump_lock.acquire()
+            
             if not self.pump:
-                self.pump_lock.release()
+                
                 break
-            self.pump_lock.release()
+            
             time.sleep(0.001)
