@@ -81,7 +81,7 @@ class LogWriter(object):
         if self.is_open:
             self.fd.close()
 
-    def open(self, filename=''):
+    def open(self, filename='', mode='w'):
         if filename == '':
             filename = datetime.datetime.now().isoformat() + '.ant'
         self.filename = filename
@@ -89,7 +89,7 @@ class LogWriter(object):
         if self.is_open == True:
             self.close()
 
-        self.fd = open(filename, 'w')
+        self.fd = open(filename, 'wb')
         self.is_open = True
         self.packer = msgpack.Packer()
 
