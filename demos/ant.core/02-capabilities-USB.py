@@ -10,6 +10,7 @@ from ant.core import node
 
 from config import *
 
+print(SERIAL)
 # Initialize
 stick = driver.USB2Driver(SERIAL, log=LOG, debug=DEBUG)
 antnode = node.Node(stick)

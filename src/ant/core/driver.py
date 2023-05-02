@@ -168,19 +168,20 @@ class USB1Driver(Driver):
 class USB2Driver(Driver):
     def _open(self):
         # Most of this is straight from the PyUSB example documentation		
-        dev = usb.core.find(idVendor=0x0fcf, idProduct=0x1008)
+        #dev = usb.core.find(idVendor=0x0fcf, idProduct=0x1008)
+        dev1 = usb.core.find(idVendor=0x0fcf, idProduct=0x1009)
 
-        if dev is None:
+        if dev1 is None:
             raise DriverError('Could not open device (not found)')
-        dev.set_configuration()
-        cfg = dev.get_active_configuration()
+        dev1.set_configuration()
+        cfg = dev1.get_active_configuration()
         interface_number = cfg[(0,0)].bInterfaceNumber
-        alternate_setting = usb.control.get_interface(dev, interface_number)
+        alternate_setting = usb.control.get_interface(dev1, interface_number)
         intf = usb.util.find_descriptor(
             cfg, bInterfaceNumber = interface_number,
             AlternateSetting = alternate_setting
         )
-        usb.util.claim_interface(dev, interface_number)
+        usb.util.claim_interface(dev1, interface_number)
         ep_out = usb.util.find_descriptor(
             intf,
             custom_match = \
@@ -199,7 +200,7 @@ class USB2Driver(Driver):
         assert ep_in is not None
         self._ep_out = ep_out
         self._ep_in = ep_in
-        self._dev = dev
+        self._dev = dev1
         self._int = interface_number
 
     def _close(self):
