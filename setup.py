@@ -24,41 +24,44 @@
 ##############################################################################
 
 import os
-
 from setuptools import setup, find_packages
 
-
 def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+    return open(os.path.join(os.path.dirname(__file__), fname), encoding="utf-8").read()
 
 setup(
     name='ant',
     version='main',
     url='https://github.com/danish123117/python-ant',
     license='MIT',
-    description='Python implementation of the ANT, ANT+, and ANT-FS ' \
-                'protocols (http://www.thisisant.com/).',
-    author=u'Mart\u00EDn Ra\u00FAl Villalba',
+    description='Python implementation of the ANT, ANT+, and ANT-FS protocols (http://www.thisisant.com/).',
+    author='Martín Raúl Villalba',
     author_email='martin@martinvillalba.com',
     long_description=read('README.md'),
+    long_description_content_type='text/markdown',
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.6",
-        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "Topic :: Communications",
         "Topic :: Communications :: File Sharing",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     packages=find_packages('src'),
     package_dir={'': 'src'},
+    python_requires='>=3.6',
     install_requires=[
-        'distribute',
+        'setuptools',
         'pyserial',
         'pyusb',
         'msgpack-python'
     ],
 )
+
