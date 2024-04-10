@@ -34,7 +34,7 @@ def read(fname):
 setup(
     name='ant',
     version='main',
-    url='http://www.github.com/mvillalba/python-ant',
+    url='https://github.com/danish123117/python-ant',
     license='MIT',
     description='Python implementation of the ANT, ANT+, and ANT-FS ' \
                 'protocols (http://www.thisisant.com/).',
